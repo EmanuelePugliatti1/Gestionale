@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NovaTechManagement.Data;
 using NovaTechManagement.Interfaces;
@@ -50,6 +50,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Serve static files (e.g., HTML, CSS, JS) from wwwroot
+// UseDefaultFiles must be called before UseStaticFiles to serve default documents like index.html
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 
