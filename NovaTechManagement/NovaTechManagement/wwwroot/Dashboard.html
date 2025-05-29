@@ -1,0 +1,174 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Space+Grotesk%3Awght%40400%3B500%3B700"
+    />
+
+    <title>NovaTech Dashboard</title> <!-- Changed title -->
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="js/auth.js"></script> <!-- Added auth.js -->
+  </head>
+  <body>
+    <script>checkAuthentication();</script> <!-- Call checkAuthentication -->
+
+    <div class="relative flex size-full min-h-screen flex-col bg-[#101a23] dark group/design-root overflow-x-hidden" style='font-family: "Space Grotesk", "Noto Sans", sans-serif;'>
+      <div class="layout-container flex h-full grow flex-col">
+        <div class="gap-1 px-6 flex flex-1 justify-center py-5">
+          <div class="layout-content-container flex flex-col w-80">
+            <div class="flex h-full min-h-[700px] flex-col justify-between bg-[#101a23] p-4">
+              <div class="flex flex-col gap-4">
+                <h1 class="text-white text-base font-medium leading-normal">NovaTech</h1>
+                <div class="flex flex-col gap-2">
+                  <a href="Dashboard.html" class="flex items-center gap-3 px-3 py-2 rounded-xl bg-[#223649]"> <!-- Link added, active state -->
+                    <div class="text-white" data-icon="House" data-size="24px" data-weight="fill">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                        <path
+                          d="M224,115.55V208a16,16,0,0,1-16,16H168a16,16,0,0,1-16-16V168a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v40a16,16,0,0,1-16,16H48a16,16,0,0,1-16-16V115.55a16,16,0,0,1,5.17-11.78l80-75.48.11-.11a16,16,0,0,1,21.53,0,1.14,1.14,0,0,0,.11.11l80,75.48A16,16,0,0,1,224,115.55Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p class="text-white text-sm font-medium leading-normal">Dashboard</p>
+                  </a>
+                  <a href="Clients.html" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-[#223649]"> <!-- Link and hover effect added -->
+                    <div class="text-white" data-icon="Users" data-size="24px" data-weight="regular">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                        <path
+                          d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p class="text-white text-sm font-medium leading-normal">Clients</p>
+                  </a>
+                  <a href="Orders.html" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-[#223649]"> <!-- Link and hover effect added -->
+                    <div class="text-white" data-icon="Package" data-size="24px" data-weight="regular">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                        <path
+                          d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p class="text-white text-sm font-medium leading-normal">Orders</p>
+                  </a>
+                  <a href="Products.html" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-[#223649]"> <!-- Link and hover effect added -->
+                    <div class="text-white" data-icon="Tag" data-size="24px" data-weight="regular"> <!-- Changed icon for Products -->
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                        <path d="M216,40H178.63a16,16,0,0,0-11.32,4.69L48.69,163.31A16,16,0,0,0,40,178.63V216a16,16,0,0,0,16,16H93.37a16,16,0,0,0,11.31-4.69L223.31,92.69A16,16,0,0,0,232,81.37V48A16,16,0,0,0,216,40ZM128,104a16,16,0,1,1,16,16A16,16,0,0,1,128,104Zm88,34.63a15.93,15.93,0,0,0-4.69,11.31V176H180a24,24,0,0,1-24-24V119.25l29.37-29.37a8,8,0,0,1,11.32,0L216,109.37ZM81.37,224H56V190.63a15.93,15.93,0,0,0-4.69-11.31L32,160V131.25l29.37,29.38a8,8,0,0,1,0,11.31L40,191.31V216a8,8,0,0,1-8-8V180a24,24,0,0,1,24-24h32.75l-29.37,29.37a8,8,0,0,1-11.32,0L32,196Zm136-160h29.37l.05,29.37-16,16L192,65.37ZM56,72a16,16,0,1,1,16-16A16,16,0,0,1,56,72Z"></path>
+                      </svg>
+                    </div>
+                    <p class="text-white text-sm font-medium leading-normal">Products</p>
+                  </a>
+                  <a href="Invoices.html" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-[#223649]"> <!-- Link and hover effect added -->
+                    <div class="text-white" data-icon="Receipt" data-size="24px" data-weight="regular">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                        <path
+                          d="M72,104a8,8,0,0,1,8-8h96a8,8,0,0,1,0,16H80A8,8,0,0,1,72,104Zm8,40h96a8,8,0,0,0,0-16H80a8,8,0,0,0,0,16ZM232,56V208a8,8,0,0,1-11.58,7.15L192,200.94l-28.42,14.21a8,8,0,0,1-7.16,0L128,200.94,99.58,215.15a8,8,0,0,1-7.16,0L64,200.94,35.58,215.15A8,8,0,0,1,24,208V56A16,16,0,0,1,40,40H216A16,16,0,0,1,232,56Zm-16,0H40V195.06l20.42-10.22a8,8,0,0,1,7.16,0L96,199.06l28.42-14.22a8,8,0,0,1,7.16,0L160,199.06l28.42-14.22a8,8,0,0,1,7.16,0L216,195.06Z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <p class="text-white text-sm font-medium leading-normal">Invoices</p>
+                  </a>
+                  <!-- Settings link can be added later if needed -->
+                </div>
+              </div>
+              <div class="mt-auto pb-4"> <!-- Pushed to bottom -->
+                  <button id="logoutButton" class="flex items-center gap-3 px-3 py-2 text-white w-full hover:bg-[#223649] rounded-xl">
+                      <div class="text-white" data-icon="SignOut" data-size="24px" data-weight="regular">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                              <path d="M112,216a8,8,0,0,1-8,8H48a16,16,0,0,1-16-16V48A16,16,0,0,1,48,32h56a8,8,0,0,1,0,16H48V208h56A8,8,0,0,1,112,216Zm115.06-92.69-48-40a8,8,0,0,0-11.41,10.05L190.39,112H104a8,8,0,0,0,0,16h86.39l-22.74,18.64a8,8,0,0,0,5.7,14.05,8.09,8.09,0,0,0,5.71-2.31l48-40A8,8,0,0,0,227.06,123.31Z"></path>
+                          </svg>
+                      </div>
+                      <span class="text-sm font-medium leading-normal">Logout</span>
+                  </button>
+              </div>
+            </div>
+          </div>
+          <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+            <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-white tracking-light text-[32px] font-bold leading-tight min-w-72">Dashboard</p></div>
+            <div class="flex flex-wrap gap-4 p-4">
+              <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 bg-[#223649]">
+                <p class="text-white text-base font-medium leading-normal">Total Revenue</p>
+                <p id="totalRevenue" class="text-white tracking-light text-2xl font-bold leading-tight">$0</p> <!-- Added ID -->
+                <!-- <p class="text-[#0bda5b] text-base font-medium leading-normal">+15%</p> --> <!-- Percentage change removed for now -->
+              </div>
+              <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 bg-[#223649]">
+                <p class="text-white text-base font-medium leading-normal">Orders Processed</p>
+                <p id="ordersProcessed" class="text-white tracking-light text-2xl font-bold leading-tight">0</p> <!-- Added ID -->
+                <!-- <p class="text-[#0bda5b] text-base font-medium leading-normal">+10%</p> -->
+              </div>
+              <div class="flex min-w-[158px] flex-1 flex-col gap-2 rounded-xl p-6 bg-[#223649]">
+                <p class="text-white text-base font-medium leading-normal">New Clients</p>
+                <p id="newClients" class="text-white tracking-light text-2xl font-bold leading-tight">0</p> <!-- Added ID -->
+                <!-- <p class="text-[#0bda5b] text-base font-medium leading-normal">+20%</p> -->
+              </div>
+            </div>
+            <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Performance Overview</h2>
+            <div class="flex flex-wrap gap-4 px-4 py-6">
+              <div class="flex min-w-72 flex-1 flex-col gap-2 rounded-xl border border-[#314d68] p-6">
+                <p class="text-white text-base font-medium leading-normal">Revenue Trend</p>
+                <p id="revenueTrendTotal" class="text-white tracking-light text-[32px] font-bold leading-tight truncate">$0</p> <!-- Added ID -->
+                <div class="flex gap-1">
+                  <p id="revenueTrendDescription" class="text-[#90adcb] text-base font-normal leading-normal">Last 6 Months</p> <!-- Added ID -->
+                  <!-- <p class="text-[#0bda5b] text-base font-medium leading-normal">+15%</p> -->
+                </div>
+                <div class="flex min-h-[180px] flex-1 flex-col gap-8 py-4">
+                  <div id="revenueChartContainer" class="w-full h-[148px]"> <!-- Placeholder for chart -->
+                     <p class="text-center text-[#90adcb]">Revenue chart will load here...</p>
+                  </div>
+                  <div id="revenueChartLabels" class="flex justify-around"> <!-- Labels will be populated by JS -->
+                  </div>
+                </div>
+              </div>
+              <div class="flex min-w-72 flex-1 flex-col gap-2 rounded-xl border border-[#314d68] p-6">
+                <p class="text-white text-base font-medium leading-normal">Order Distribution</p>
+                <p id="orderDistributionTotal" class="text-white tracking-light text-[32px] font-bold leading-tight truncate">0</p> <!-- Added ID -->
+                <div class="flex gap-1">
+                  <p id="orderDistributionDescription" class="text-[#90adcb] text-base font-normal leading-normal">This Month</p> <!-- Added ID -->
+                  <!-- <p class="text-[#0bda5b] text-base font-medium leading-normal">+10%</p> -->
+                </div>
+                <div id="orderDistributionChartContainer" class="grid min-h-[180px] grid-flow-col gap-6 grid-rows-[1fr_auto] items-end justify-items-center px-3">
+                   <!-- Bars will be populated by JS -->
+                   <p class="text-center text-[#90adcb]">Order distribution chart will load here...</p>
+                </div>
+              </div>
+            </div>
+            <h2 class="text-white text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Recent Activity</h2>
+            <div class="px-4 py-3 @container">
+              <div class="flex overflow-hidden rounded-xl border border-[#314d68] bg-[#101a23]">
+                <table class="flex-1">
+                  <thead>
+                    <tr class="bg-[#182634]">
+                      <th class="table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-120 px-4 py-3 text-left text-white w-[25%] text-sm font-medium leading-normal">Order ID</th>
+                      <th class="table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-240 px-4 py-3 text-left text-white w-[25%] text-sm font-medium leading-normal">Client</th>
+                      <th class="table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-360 px-4 py-3 text-left text-white w-[20%] text-sm font-medium leading-normal">Date</th>
+                      <th class="table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-480 px-4 py-3 text-left text-white w-[15%] text-sm font-medium leading-normal">Status</th>
+                      <th class="table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-600 px-4 py-3 text-left text-white w-[15%] text-sm font-medium leading-normal">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="recentActivityTableBody"> <!-- Added ID -->
+                    <!-- Rows will be populated by JS -->
+                    <tr><td colspan="5" class="text-center text-[#90adcb] py-4">Loading recent activities...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <style>
+                          @container(max-width:120px){.table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-120{display: none;}}
+                @container(max-width:240px){.table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-240{display: none;}}
+                @container(max-width:360px){.table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-360{display: none;}}
+                @container(max-width:480px){.table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-480{display: none;}}
+                @container(max-width:600px){.table-7d9cf46c-e1c2-40bf-9c03-58f5bb9237b6-column-600{display: none;}}
+              </style>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Specific script for Dashboard page to fetch and display data -->
+    <script src="js/dashboard-data.js"></script> 
+  </body>
+</html>

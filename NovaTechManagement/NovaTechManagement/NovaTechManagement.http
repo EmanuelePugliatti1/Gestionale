@@ -1,0 +1,6 @@
+@NovaTechManagement_HostAddress = http://localhost:5038
+
+GET {{NovaTechManagement_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
