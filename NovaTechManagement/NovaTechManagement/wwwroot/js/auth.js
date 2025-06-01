@@ -1,6 +1,6 @@
 // NovaTechManagement/NovaTechManagement/wwwroot/js/auth.js
 
-const API_BASE_URL = ''; // Assuming API is at the same origin
+const API_BASE_URL = 'https://localhost:44372/'; // Assuming API is at the same origin
 
 /**
  * Checks for the authentication token in localStorage.
