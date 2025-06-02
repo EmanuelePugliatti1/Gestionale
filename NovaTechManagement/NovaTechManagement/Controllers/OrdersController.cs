@@ -14,7 +14,7 @@ namespace NovaTechManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // Protect all actions in this controller
+    // Removed controller-level [Authorize] to apply action-specific roles
     public class OrdersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -26,6 +26,7 @@ namespace NovaTechManagement.Controllers
 
         // GET: api/orders
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public async Task<ActionResult<IEnumerable<OrderDto>>> GetOrders([FromQuery] int? clientId, [FromQuery] string? status)
         {
             var query = _context.Orders
@@ -74,6 +75,7 @@ namespace NovaTechManagement.Controllers
 
         // GET: api/orders/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
             var order = await _context.Orders
@@ -117,6 +119,7 @@ namespace NovaTechManagement.Controllers
 
         // POST: api/orders
         [HttpPost]
+        [Authorize(Roles = "Admin")] // Or "Admin,User" if users can create their own orders
         public async Task<ActionResult<OrderDto>> CreateOrder([FromBody] CreateOrderDto createOrderDto)
         {
             // Validate ClientId
@@ -149,7 +152,7 @@ namespace NovaTechManagement.Controllers
                 };
                 newOrderItems.Add(orderItem);
                 totalOrderAmount += orderItem.Quantity * orderItem.UnitPrice;
-                
+
                 // Decrease stock
                 product.QuantityInStock -= itemDto.Quantity;
             }
@@ -179,7 +182,7 @@ namespace NovaTechManagement.Controllers
                     return StatusCode(500, new { Message = "An error occurred while creating the order. The transaction has been rolled back." });
                 }
             }
-            
+
             // Reload order with includes for the response DTO
              var createdOrder = await _context.Orders
                 .Include(o => o.Client)
@@ -218,6 +221,7 @@ namespace NovaTechManagement.Controllers
 
         // PUT: api/orders/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateOrder(int id, [FromBody] UpdateOrderDto updateOrderDto)
         {
             var order = await _context.Orders.FindAsync(id);
@@ -241,8 +245,8 @@ namespace NovaTechManagement.Controllers
             {
                 order.Status = updateOrderDto.Status;
             }
-            
-            // Note: Updating OrderItems is not handled in this PUT. 
+
+            // Note: Updating OrderItems is not handled in this PUT.
             // That would typically be a more complex operation, possibly involving separate endpoints or a more detailed DTO.
 
             try
@@ -260,7 +264,7 @@ namespace NovaTechManagement.Controllers
                     throw;
                 }
             }
-            
+
             // Reload order with includes for the response DTO
              var updatedOrderEntity = await _context.Orders
                 .Include(o => o.Client)
@@ -299,6 +303,7 @@ namespace NovaTechManagement.Controllers
 
         // DELETE: api/orders/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
             var order = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
@@ -312,7 +317,7 @@ namespace NovaTechManagement.Controllers
             {
                  return BadRequest(new { Message = $"Order with status '{order.Status}' cannot be deleted." });
             }
-            
+
             var hasInvoices = await _context.Invoices.AnyAsync(i => i.OrderId == id);
             if (hasInvoices)
             {
@@ -332,7 +337,7 @@ namespace NovaTechManagement.Controllers
             // OrderItems will be deleted by cascade delete if configured (see next step).
             // If not, remove them manually: _context.OrderItems.RemoveRange(order.OrderItems);
             _context.Orders.Remove(order);
-            
+
             await _context.SaveChangesAsync();
 
             return NoContent();

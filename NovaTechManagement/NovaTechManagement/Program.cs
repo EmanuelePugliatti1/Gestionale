@@ -8,9 +8,26 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins"; // CORS Policy Name
+
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("null", // For 'file://' origin
+                                             "http://localhost:8000",
+                                             "http://localhost:8080",
+                                             "http://127.0.0.1:5500", // VS Code Live Server
+                                             "https://localhost:44372") // User's specified API base
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                      });
+});
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? 
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ??
                       "Data Source=NovaTechManagement.db"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -57,6 +74,8 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins); // Add CORS middleware here
 
 // Correct order of middleware:
 // 1. Routing (implicitly added before UseEndpoints or covered by MapControllers in minimal APIs)

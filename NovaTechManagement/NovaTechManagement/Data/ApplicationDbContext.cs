@@ -9,12 +9,17 @@ namespace NovaTechManagement.Data
         {
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<User> Users { get; set; } = default!;
+        public DbSet<Client> Clients { get; set; } = default!;
+        public DbSet<Product> Products { get; set; } = default!;
+        public DbSet<Order> Orders { get; set; } = default!;
+        public DbSet<OrderItem> OrderItems { get; set; } = default!;
+        public DbSet<Invoice> Invoices { get; set; } = default!;
+
+        // New DbSets for RBAC
+        public DbSet<Role> Roles { get; set; } = default!;
+        public DbSet<UserRole> UserRoles { get; set; } = default!;
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,7 +47,7 @@ namespace NovaTechManagement.Data
                 .HasOne(oi => oi.Order)
                 .WithMany(o => o.OrderItems)
                 .HasForeignKey(oi => oi.OrderId)
-                .OnDelete(DeleteBehavior.Cascade); // Changed to Cascade
+                .OnDelete(DeleteBehavior.Cascade);
 
             // OrderItem - Product relationship
             modelBuilder.Entity<OrderItem>()
@@ -54,16 +59,36 @@ namespace NovaTechManagement.Data
             // Invoice - Order relationship
             modelBuilder.Entity<Invoice>()
                 .HasOne(i => i.Order)
-                .WithMany(o => o.Invoices) // Corrected: Order has many Invoices
+                .WithMany(o => o.Invoices)
                 .HasForeignKey(i => i.OrderId)
                 .OnDelete(DeleteBehavior.Restrict);
-                
+
             // Invoice - Client relationship
             modelBuilder.Entity<Invoice>()
                 .HasOne(i => i.Client)
-                .WithMany(c => c.Invoices) // Client has many Invoices
+                .WithMany(c => c.Invoices)
                 .HasForeignKey(i => i.ClientId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Configure UserRole many-to-many relationship
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.HasKey(ur => new { ur.UserId, ur.RoleId });
+
+                entity.HasOne(ur => ur.User)
+                    .WithMany(u => u.UserRoles)
+                    .HasForeignKey(ur => ur.UserId);
+
+                entity.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId);
+            });
+
+            // Seed Roles
+            modelBuilder.Entity<Role>().HasData(
+                new Role { Id = 1, Name = "Admin" },
+                new Role { Id = 2, Name = "User" }
+            );
         }
     }
 }

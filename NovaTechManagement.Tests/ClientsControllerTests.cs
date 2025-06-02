@@ -117,7 +117,7 @@ public class ClientsControllerTests
 
         // Assert
         // Assert.IsType<OkObjectResult>(result); // Controller returns Ok(clientDto)
-        await Task.CompletedTask; 
+        await Task.CompletedTask;
         Assert.True(true); // Placeholder assertion
     }
 
@@ -134,7 +134,7 @@ public class ClientsControllerTests
 
         // Assert
         // Assert.IsType<NoContentResult>(result); // This would be the goal if no orders
-        await Task.CompletedTask; 
+        await Task.CompletedTask;
         Assert.True(true); // Placeholder assertion
     }
 }

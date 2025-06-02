@@ -1,4 +1,6 @@
 using System;
+using System;
+using System.Collections.Generic; // Added for ICollection
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,5 +24,7 @@ namespace NovaTechManagement.Models
         public string? LastName { get; set; }
 
         public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
+
+        public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 }

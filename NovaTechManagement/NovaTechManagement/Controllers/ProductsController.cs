@@ -13,7 +13,7 @@ namespace NovaTechManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // Protect all actions in this controller
+    // Removed controller-level [Authorize] to apply action-specific roles
     public class ProductsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -25,6 +25,7 @@ namespace NovaTechManagement.Controllers
 
         // GET: api/products
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts([FromQuery] string? search)
         {
             var query = _context.Products.AsQueryable();
@@ -51,6 +52,7 @@ namespace NovaTechManagement.Controllers
 
         // GET: api/products/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -77,6 +79,7 @@ namespace NovaTechManagement.Controllers
 
         // POST: api/products
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductDto>> CreateProduct([FromBody] CreateProductDto createProductDto)
         {
             var product = new Product
@@ -110,6 +113,7 @@ namespace NovaTechManagement.Controllers
 
         // PUT: api/products/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdateProductDto updateProductDto)
         {
             var product = await _context.Products.FindAsync(id);
@@ -143,7 +147,7 @@ namespace NovaTechManagement.Controllers
             {
                 product.ImageUrl = updateProductDto.ImageUrl;
             }
-            
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -176,6 +180,7 @@ namespace NovaTechManagement.Controllers
 
         // DELETE: api/products/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);

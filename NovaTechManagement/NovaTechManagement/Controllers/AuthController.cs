@@ -39,6 +39,23 @@ namespace NovaTechManagement.Controllers
                 RegistrationDate = DateTime.UtcNow
             };
 
+            // Assign default "User" role
+            var defaultRole = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "User");
+            if (defaultRole != null)
+            {
+                // Initialize UserRoles collection if it's null (though it's initialized in the model)
+                user.UserRoles ??= new List<UserRole>();
+                user.UserRoles.Add(new UserRole { RoleId = defaultRole.Id }); // UserId will be set by EF Core relationship fixup
+            }
+            else
+            {
+                // This case should ideally not happen if roles are seeded correctly.
+                Console.WriteLine("CRITICAL ERROR: Default 'User' role not found during registration. User will not have a role.");
+                // Depending on policy, you might want to prevent registration or log this as a severe issue.
+                // For now, we'll proceed with user creation but without the default role.
+                // return StatusCode(500, new { Message = "Error assigning default role. Please contact support." });
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
@@ -59,13 +76,50 @@ namespace NovaTechManagement.Controllers
             }
 
             var token = _tokenService.CreateToken(user);
+
+            // Fetch user roles to include in the response
+            var userRoles = await _context.UserRoles
+                                          .Where(ur => ur.UserId == user.Id)
+                                          .Include(ur => ur.Role) // Ensure Role information is loaded
+                                          .Select(ur => ur.Role.Name)
+                                          .ToListAsync();
+
             return Ok(new AuthResponseDto
             {
                 Token = token,
                 Email = user.Email,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                Roles = userRoles // Add roles to the DTO
             });
+        }
+
+        // POST api/auth/forgot-password
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+        {
+            if (forgotPasswordDto == null || string.IsNullOrWhiteSpace(forgotPasswordDto.Email))
+            {
+                return BadRequest(new { Message = "Email is required." });
+            }
+
+            // For now, simulate success. Actual implementation would involve:
+            // 1. Check if user with email exists.
+            // 2. Generate a password reset token.
+            // 3. Save token with expiry to user record or separate table.
+            // 4. Send an email with a reset link (out of scope for this agent).
+            Console.WriteLine($"Password reset requested for: {forgotPasswordDto.Email}");
+
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == forgotPasswordDto.Email);
+            if (user == null)
+            {
+                 // To prevent email enumeration, it's common to return a generic success message
+                 // regardless of whether the user exists or not.
+                 return Ok(new { Message = "If your email address is registered with us, you will receive instructions to reset your password." });
+            }
+
+            // Placeholder for actual reset logic
+            return Ok(new { Message = "If your email address is registered with us, you will receive instructions to reset your password." });
         }
     }
 }

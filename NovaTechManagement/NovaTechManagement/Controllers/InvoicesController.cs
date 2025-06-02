@@ -14,7 +14,7 @@ namespace NovaTechManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize] // Protect all actions in this controller
+    // Removed controller-level [Authorize] to apply action-specific roles
     public class InvoicesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
@@ -26,6 +26,7 @@ namespace NovaTechManagement.Controllers
 
         // GET: api/invoices
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         public async Task<ActionResult<IEnumerable<InvoiceDto>>> GetInvoices(
             [FromQuery] int? clientId,
             [FromQuery] int? orderId,
@@ -81,6 +82,7 @@ namespace NovaTechManagement.Controllers
 
         // GET: api/invoices/{id}
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,User")]
         public async Task<ActionResult<InvoiceDto>> GetInvoice(int id)
         {
             var invoice = await _context.Invoices
@@ -123,6 +125,7 @@ namespace NovaTechManagement.Controllers
 
         // POST: api/invoices
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<InvoiceDto>> CreateInvoice([FromBody] CreateInvoiceDto createInvoiceDto)
         {
             var order = await _context.Orders.FindAsync(createInvoiceDto.OrderId);
@@ -149,7 +152,7 @@ namespace NovaTechManagement.Controllers
 
             _context.Invoices.Add(invoice);
             await _context.SaveChangesAsync();
-            
+
             // Reload invoice with includes for the response DTO
             var createdInvoice = await _context.Invoices
                 .Include(i => i.Client)
@@ -187,6 +190,7 @@ namespace NovaTechManagement.Controllers
 
         // PUT: api/invoices/{id}
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateInvoice(int id, [FromBody] UpdateInvoiceDto updateInvoiceDto)
         {
             var invoice = await _context.Invoices.FindAsync(id);
@@ -225,7 +229,7 @@ namespace NovaTechManagement.Controllers
                     throw;
                 }
             }
-            
+
             // Reload invoice with includes for the response DTO
             var updatedInvoiceEntity = await _context.Invoices
                 .Include(i => i.Client)
@@ -262,6 +266,7 @@ namespace NovaTechManagement.Controllers
 
         // DELETE: api/invoices/{id}
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteInvoice(int id)
         {
             var invoice = await _context.Invoices.FindAsync(id);

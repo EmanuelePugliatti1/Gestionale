@@ -1,6 +1,6 @@
 // NovaTechManagement/NovaTechManagement/wwwroot/js/auth.js
 
-const API_BASE_URL = 'https://localhost:44372/'; // Assuming API is at the same origin
+const API_BASE_URL = 'https://localhost:44372/'; // Ensure trailing slash
 
 /**
  * Checks for the authentication token in localStorage.
@@ -10,7 +10,7 @@ function checkAuthentication() {
     const token = localStorage.getItem('authToken');
     if (!token) {
         if (!window.location.pathname.endsWith('index.html') && window.location.pathname !== '/') {
-            window.location.href = 'index.html';
+            window.location.href = 'index.html'; // Assumes index.html is at the root
         }
     }
 }
@@ -23,7 +23,35 @@ function logout() {
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userFirstName');
     localStorage.removeItem('userLastName');
-    window.location.href = 'index.html';
+    localStorage.removeItem('userRoles'); // Remove userRoles on logout
+    window.location.href = 'index.html'; // Assumes index.html is at the root
+}
+
+/**
+ * Returns the array of roles for the current user from localStorage.
+ * @returns {string[]} Array of role names, or an empty array if not found/invalid.
+ */
+function getUserRoles() {
+    const rolesString = localStorage.getItem('userRoles');
+    try {
+        if (rolesString) {
+            const roles = JSON.parse(rolesString);
+            return Array.isArray(roles) ? roles : [];
+        }
+    } catch (e) {
+        console.error("Error parsing userRoles from localStorage", e);
+    }
+    return [];
+}
+
+/**
+ * Checks if the current user has a specific role.
+ * @param {string} roleName - The name of the role to check for.
+ * @returns {boolean} True if the user has the role, false otherwise.
+ */
+function hasRole(roleName) {
+    const roles = getUserRoles();
+    return roles.includes(roleName);
 }
 
 /**
@@ -55,15 +83,15 @@ function getUserDetails() {
 
 /**
  * Makes an authenticated API call.
- * @param {string} url - The API endpoint (e.g., '/api/clients').
+ * @param {string} relativeUrl - The API endpoint (e.g., '/api/clients' or 'api/clients').
  * @param {object} options - Standard fetch options.
  * @returns {Promise<Response>} The fetch Response object.
  * @throws {Error} If the request fails or returns an error status (after handling 401).
  */
-async function fetchWithAuth(url, options = {}) {
+async function fetchWithAuth(relativeUrl, options = {}) {
     const token = getToken();
     const headers = {
-        'Content-Type': 'application/json', // Default, can be overridden by options.headers
+        'Content-Type': 'application/json',
         ...options.headers,
     };
 
@@ -71,24 +99,24 @@ async function fetchWithAuth(url, options = {}) {
         headers['Authorization'] = `Bearer ${token}`;
     }
 
+    // Construct absolute URL
+    // Ensure API_BASE_URL ends with a slash and relativeUrl doesn't start with one, or handle both cases.
+    const cleanBase = API_BASE_URL.endsWith('/') ? API_BASE_URL : API_BASE_URL + '/';
+    const cleanRelativeUrl = relativeUrl.startsWith('/') ? relativeUrl.substring(1) : relativeUrl;
+    const absoluteUrl = cleanBase + cleanRelativeUrl;
+
     try {
-        const response = await fetch(API_BASE_URL + url, { ...options, headers });
+        const response = await fetch(absoluteUrl, { ...options, headers });
 
         if (response.status === 401) {
-            logout(); // Handles redirect to login
-            // Throw an error to stop further processing in the calling function
+            logout();
             throw new Error('Unauthorized: Session expired or invalid. Logging out.');
         }
-        
-        // Do not throw for other non-ok statuses here, let the caller handle it.
-        // This allows callers to parse error messages from the body if needed.
-        return response; 
+
+        return response;
     } catch (error) {
-        // Log network errors or errors from the fetch call itself (e.g. if server is down)
-        // Errors from non-ok statuses (except 401) should be handled by the caller
-        // The 401 error thrown above will also be caught here if not caught by caller.
-        console.error(`Fetch error for ${url}:`, error.message); 
-        throw error; // Re-throw to allow caller to handle if needed
+        console.error(`Fetch error for ${absoluteUrl}:`, error.message);
+        throw error;
     }
 }
 
@@ -98,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoutButton = document.getElementById('logoutButton');
     if (logoutButton) {
         logoutButton.addEventListener('click', function(event) {
-            event.preventDefault(); 
+            event.preventDefault();
             logout();
         });
     }

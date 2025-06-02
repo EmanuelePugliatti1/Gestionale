@@ -16,7 +16,7 @@
     <style>
         /* Basic Modal Styling - Copied from Clients.html for consistency */
         .modal {
-            display: none; 
+            display: none;
             position: fixed;
             z-index: 1000;
             left: 0;
@@ -168,7 +168,7 @@
         <form id="addInvoiceForm">
             <label for="addInvoiceOrderId" class="block text-sm font-medium mb-1">Order ID:</label>
             <input type="number" id="addInvoiceOrderId" name="orderId" class="modal-input" required>
-            
+
             <label for="addInvoiceStatus" class="block text-sm font-medium mb-1">Status:</label>
             <select id="addInvoiceStatus" name="status" class="modal-select" required>
                 <option value="Pending" selected>Pending</option>
@@ -178,7 +178,7 @@
 
             <label for="addInvoiceDueDate" class="block text-sm font-medium mb-1">Due Date (Optional):</label>
             <input type="date" id="addInvoiceDueDate" name="dueDate" class="modal-input">
-            
+
             <button type="submit" id="saveInvoiceButton" class="modal-button mt-4">Save Invoice</button>
         </form>
       </div>

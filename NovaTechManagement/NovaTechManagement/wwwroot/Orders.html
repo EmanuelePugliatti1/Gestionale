@@ -16,7 +16,7 @@
     <style>
         /* Basic Modal Styling - Copied from Clients.html for consistency */
         .modal {
-            display: none; 
+            display: none;
             position: fixed;
             z-index: 1000;
             left: 0;
@@ -192,7 +192,7 @@
         <form id="addOrderForm">
             <label for="addOrderClientId" class="block text-sm font-medium mb-1">Client ID:</label>
             <input type="number" id="addOrderClientId" name="clientId" class="modal-input" required>
-            
+
             <label for="addOrderStatus" class="block text-sm font-medium mb-1">Status:</label>
             <select id="addOrderStatus" name="status" class="modal-select" required>
                 <option value="Open" selected>Open</option>
@@ -208,7 +208,7 @@
 
             <label for="addOrderItemQuantity" class="block text-sm font-medium mb-1">Quantity:</label>
             <input type="number" id="addOrderItemQuantity" name="quantity" class="modal-input" min="1" value="1" required>
-            
+
             <button type="submit" id="saveOrderButton" class="modal-button mt-4">Save Order</button>
         </form>
       </div>

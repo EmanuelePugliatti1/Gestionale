@@ -25,14 +25,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const saveOrderButton = document.getElementById('saveOrderButton');
     const statusFiltersContainer = document.getElementById('orderStatusFilters');
 
-    let currentStatusFilter = ''; 
+    let currentStatusFilter = '';
 
     function displayOrders(orders) {
         if (!orderTableBody) {
             console.error("Order table body not found.");
             return;
         }
-        orderTableBody.innerHTML = ''; 
+        orderTableBody.innerHTML = '';
 
         if (!orders || orders.length === 0) {
             orderTableBody.innerHTML = '<tr><td colspan="6" class="text-center text-[#90adcb] py-4">No orders found.</td></tr>';
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[15%] text-white text-sm font-normal leading-normal">#${order.id}</td>`;
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[25%] text-[#90adcb] text-sm font-normal leading-normal">${order.client ? order.client.clientName : 'N/A'} (ID: ${order.clientId})</td>`;
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[15%] text-[#90adcb] text-sm font-normal leading-normal">${new Date(order.orderDate).toLocaleDateString()}</td>`;
-            
+
             const statusCell = row.insertCell();
             statusCell.className = "h-[72px] px-4 py-2 w-[15%] text-sm font-normal leading-normal";
             const statusButton = document.createElement('button');
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
             statusCell.appendChild(statusButton);
 
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[15%] text-[#90adcb] text-sm font-normal leading-normal">$${parseFloat(order.totalAmount).toFixed(2)}</td>`;
-            
+
             const actionsCell = row.insertCell();
             actionsCell.className = "h-[72px] px-4 py-2 w-[15%] text-[#90adcb] text-sm font-bold leading-normal tracking-[0.015em]";
             actionsCell.innerHTML = `<button class="hover:underline view-order-button" data-order-id="${order.id}">View Details</button>`;
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const params = new URLSearchParams();
         if (clientId) params.append('clientId', clientId);
         if (status) params.append('status', status);
-        
+
         url += params.toString();
 
         try {
@@ -87,13 +87,13 @@ document.addEventListener('DOMContentLoaded', function () {
             if (orderTableBody) orderTableBody.innerHTML = `<tr><td colspan="6" class="text-center text-red-500 py-4">Error loading orders: ${error.message}</td></tr>`;
         }
     }
-    
+
     if (searchInput) {
         searchInput.addEventListener('input', function () {
             const searchTerm = this.value.trim();
-            if (!isNaN(searchTerm) && searchTerm !== '') { 
+            if (!isNaN(searchTerm) && searchTerm !== '') {
                 fetchOrders(searchTerm, currentStatusFilter);
-            } else { 
+            } else {
                  fetchOrders('', searchTerm || currentStatusFilter);
             }
         });
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (target) {
                 event.preventDefault();
                 currentStatusFilter = target.dataset.status || '';
-                
+
                 statusFiltersContainer.querySelectorAll('.order-status-filter').forEach(btn => {
                     btn.classList.remove('border-b-[#3d98f4]', 'text-white');
                     btn.classList.add('border-b-transparent', 'text-[#90adcb]');
@@ -118,10 +118,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 target.querySelector('p').classList.remove('text-[#90adcb]');
 
                 const searchTerm = searchInput ? searchInput.value.trim() : '';
-                 if (!isNaN(searchTerm) && searchTerm !== '') { 
+                 if (!isNaN(searchTerm) && searchTerm !== '') {
                     fetchOrders(searchTerm, currentStatusFilter);
-                } else { 
-                    fetchOrders('', currentStatusFilter); 
+                } else {
+                    fetchOrders('', currentStatusFilter);
                 }
             }
         });
@@ -132,8 +132,8 @@ document.addEventListener('DOMContentLoaded', function () {
             addOrderModal.style.display = 'block';
             addOrderErrorMessage.textContent = '';
             addOrderForm.reset();
-            document.getElementById('addOrderStatus').value = 'Open'; 
-            document.getElementById('addOrderItemQuantity').value = 1; 
+            document.getElementById('addOrderStatus').value = 'Open';
+            document.getElementById('addOrderItemQuantity').value = 1;
         });
 
         closeOrderModalButton.addEventListener('click', () => {
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     throw new Error(errorData.message);
                 }
                 addOrderModal.style.display = 'none';
-                fetchOrders('', currentStatusFilter); 
+                fetchOrders('', currentStatusFilter);
             } catch (error) {
                 addOrderErrorMessage.textContent = error.message || 'Failed to add order. Please try again.';
             } finally {
@@ -198,5 +198,5 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("One or more modal elements for 'Add Order' not found.");
     }
 
-    fetchOrders(); 
+    fetchOrders();
 });
