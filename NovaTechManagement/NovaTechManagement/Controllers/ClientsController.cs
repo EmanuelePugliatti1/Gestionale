@@ -134,7 +134,7 @@ namespace NovaTechManagement.Controllers
             {
                 client.ClientName = updateClientDto.ClientName;
             }
-
+            
             // Phone can be set to null or a new value
             if (updateClientDto.Phone != null || client.Phone != null ) // only update if DTO has a value or if current value is not null
             {
@@ -162,7 +162,7 @@ namespace NovaTechManagement.Controllers
                     throw;
                 }
             }
-
+            
             var clientDto = new ClientDto
             {
                 Id = client.Id,
@@ -197,11 +197,11 @@ namespace NovaTechManagement.Controllers
             {
                 // Option 1: Prevent deletion
                 return BadRequest(new { Message = "Client cannot be deleted because they have existing orders. Consider inactivating the client instead." });
-
+                
                 // Option 2: Soft delete (requires changes to Client model and queries)
                 // client.Status = "Deleted"; // Or IsDeleted = true;
                 // await _context.SaveChangesAsync();
-                // return NoContent();
+                // return NoContent(); 
             }
 
 

@@ -152,7 +152,7 @@ namespace NovaTechManagement.Controllers
 
             _context.Invoices.Add(invoice);
             await _context.SaveChangesAsync();
-
+            
             // Reload invoice with includes for the response DTO
             var createdInvoice = await _context.Invoices
                 .Include(i => i.Client)
@@ -229,7 +229,7 @@ namespace NovaTechManagement.Controllers
                     throw;
                 }
             }
-
+            
             // Reload invoice with includes for the response DTO
             var updatedInvoiceEntity = await _context.Invoices
                 .Include(i => i.Client)

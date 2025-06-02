@@ -91,7 +91,7 @@ function getUserDetails() {
 async function fetchWithAuth(relativeUrl, options = {}) {
     const token = getToken();
     const headers = {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json', 
         ...options.headers,
     };
 
@@ -109,14 +109,14 @@ async function fetchWithAuth(relativeUrl, options = {}) {
         const response = await fetch(absoluteUrl, { ...options, headers });
 
         if (response.status === 401) {
-            logout();
+            logout(); 
             throw new Error('Unauthorized: Session expired or invalid. Logging out.');
         }
-
-        return response;
+        
+        return response; 
     } catch (error) {
-        console.error(`Fetch error for ${absoluteUrl}:`, error.message);
-        throw error;
+        console.error(`Fetch error for ${absoluteUrl}:`, error.message); 
+        throw error; 
     }
 }
 
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const logoutButton = document.getElementById('logoutButton');
     if (logoutButton) {
         logoutButton.addEventListener('click', function(event) {
-            event.preventDefault();
+            event.preventDefault(); 
             logout();
         });
     }

@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error("Product table body not found.");
             return;
         }
-        productTableBody.innerHTML = '';
+        productTableBody.innerHTML = ''; 
 
         if (!products || products.length === 0) {
             productTableBody.innerHTML = '<tr><td colspan="6" class="text-center text-[#90adcb] py-4">No products found.</td></tr>';
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[35%] text-white text-sm font-normal leading-normal">${product.productName}</td>`;
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[15%] text-[#90adcb] text-sm font-normal leading-normal">$${parseFloat(product.price).toFixed(2)}</td>`;
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[15%] text-[#90adcb] text-sm font-normal leading-normal">${product.quantityInStock}</td>`;
-
+            
             const statusCell = row.insertCell();
             statusCell.className = "h-[72px] px-4 py-2 w-[15%] text-sm font-normal leading-normal";
             const statusButton = document.createElement('button');
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 // If response.ok, no need to parse JSON for a POST if API returns 201/204
                 addProductModal.style.display = 'none';
-                fetchProducts();
+                fetchProducts(); 
             } catch (error) {
                 addProductErrorMessage.textContent = error.message || 'Failed to add product. Please try again.';
             } finally {

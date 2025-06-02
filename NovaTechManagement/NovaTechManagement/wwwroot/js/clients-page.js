@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error("Client table body not found.");
             return;
         }
-        clientTableBody.innerHTML = '';
+        clientTableBody.innerHTML = ''; 
 
         if (!clients || clients.length === 0) {
             clientTableBody.innerHTML = '<tr><td colspan="5" class="text-center text-[#90adcb] py-4">No clients found.</td></tr>';
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[25%] text-white text-sm font-normal leading-normal">${client.clientName}</td>`;
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[30%] text-[#90adcb] text-sm font-normal leading-normal">${client.email}</td>`;
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[20%] text-[#90adcb] text-sm font-normal leading-normal">${client.phone || 'N/A'}</td>`;
-
+            
             const statusCell = row.insertCell();
             statusCell.className = "h-[72px] px-4 py-2 w-[10%] text-sm font-normal leading-normal";
             const statusButton = document.createElement('button');
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const actionsCell = row.insertCell();
             actionsCell.className = "h-[72px] px-4 py-2 w-[15%] text-[#90adcb] text-sm font-bold leading-normal tracking-[0.015em]";
-            actionsCell.innerHTML = `<button class="hover:underline view-client-button" data-client-id="${client.id}">View</button>`;
+            actionsCell.innerHTML = `<button class="hover:underline view-client-button" data-client-id="${client.id}">View</button>`; 
         });
     }
 
@@ -88,15 +88,15 @@ document.addEventListener('DOMContentLoaded', function () {
     if (addClientButton && addClientModal && closeClientModalButton && addClientForm && saveClientButton) {
         addClientButton.addEventListener('click', () => {
             addClientModal.style.display = 'block';
-            addClientErrorMessage.textContent = '';
-            addClientForm.reset();
+            addClientErrorMessage.textContent = ''; 
+            addClientForm.reset(); 
         });
 
         closeClientModalButton.addEventListener('click', () => {
             addClientModal.style.display = 'none';
         });
 
-        window.addEventListener('click', (event) => {
+        window.addEventListener('click', (event) => { 
             if (event.target === addClientModal) {
                 addClientModal.style.display = 'none';
             }
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 addClientErrorMessage.textContent = 'Client Name, Email, and Status are required.';
                 return;
             }
-
+            
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
                 addClientErrorMessage.textContent = 'Please enter a valid email address.';
@@ -137,9 +137,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     throw new Error(errorData.message);
                 }
                 // No need to parse response.json() if API returns 201 with location or 204
-
+                
                 addClientModal.style.display = 'none';
-                fetchClients();
+                fetchClients(); 
             } catch (error) {
                 addClientErrorMessage.textContent = error.message || 'Failed to add client. Please try again.';
             } finally {
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Conditionally show/hide "Add Client" button based on role
     if (addClientButton) {
-        if (!hasRole('Admin')) {
+        if (!hasRole('Admin')) { 
             addClientButton.style.display = 'none';
         } else {
             addClientButton.style.display = 'flex'; // Assuming it's a flex item, or use '' for default

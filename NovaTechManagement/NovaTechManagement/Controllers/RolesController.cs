@@ -33,7 +33,7 @@ namespace NovaTechManagement.Controllers
         }
 
         // POST: api/users/{userId}/roles/{roleId} - Assign role to user
-        [HttpPost("/api/users/{userId}/roles/{roleId}")]
+        [HttpPost("/api/users/{userId}/roles/{roleId}")] 
         public async Task<IActionResult> AssignRoleToUser(int userId, int roleId)
         {
             var userExists = await _context.Users.AnyAsync(u => u.Id == userId);
@@ -55,7 +55,7 @@ namespace NovaTechManagement.Controllers
             // though EF Core should handle the join table directly.
             // var user = await _context.Users.Include(u => u.UserRoles).FirstOrDefaultAsync(u => u.Id == userId);
             // if (user == null) return NotFound(new { Message = "User not found." });
-            // user.UserRoles.Add(new UserRole { RoleId = roleId });
+            // user.UserRoles.Add(new UserRole { RoleId = roleId }); 
             // await _context.SaveChangesAsync();
             // The above is an alternative way; direct manipulation of UserRoles join table is often cleaner for this.
 

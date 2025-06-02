@@ -1,0 +1,115 @@
+/* Basic Modal Styling */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000; /* Ensure modals are on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if modal itself is too tall, though content scroll is preferred */
+    background-color: rgba(0,0,0,0.6); /* Dimmed background */
+}
+
+.modal-content {
+    background-color: #1c2333; /* Dark background for modal content */
+    color: #e0e0e0; /* Light text color */
+    margin: 10% auto; /* Centered, with margin from top */
+    padding: 20px;
+    border: 1px solid #314d68; /* Subtle border */
+    width: 90%; /* Responsive width */
+    max-width: 500px; /* Max width for larger screens */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Optional: subtle shadow */
+    max-height: 80vh; /* Make modal content scrollable, not the whole page */
+    overflow-y: auto; /* Allow vertical scrolling for content within the modal */
+}
+
+.modal-header { /* Optional: For a dedicated header section in modal */
+    padding-bottom: 10px;
+    border-bottom: 1px solid #314d68;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 1.25rem; /* Tailwind's text-xl */
+    font-weight: bold;
+}
+
+.close-button {
+    color: #aaa;
+    /* float: right; */ /* Replaced by flexbox in modal-header */
+    font-size: 28px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+.modal-body { /* Optional: For the main content/form area */
+    /* Add any specific padding if needed, but padding on modal-content might be enough */
+}
+
+.modal-input, .modal-textarea, .modal-select {
+    width: 100%; /* Rely on box-sizing: border-box; */
+    padding: 10px;
+    margin-bottom: 0; /* Margin will be handled by wrapper div */
+    background-color: #21284a; /* Dark input background */
+    border: 1px solid #314d68;
+    color: white;
+    border-radius: 5px;
+    box-sizing: border-box; /* Crucial for width: 100% and padding */
+    font-size: 1rem; /* Ensure readable text */
+}
+
+.modal-input:focus, .modal-textarea:focus, .modal-select:focus {
+    outline: none;
+    border-color: #607afb; /* Highlight focus */
+    box-shadow: 0 0 0 2px rgba(96, 122, 251, 0.5); /* Optional focus ring */
+}
+
+.modal-textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.modal-label { /* Style for labels if needed */
+    display: block; /* Make labels block for proper spacing */
+    margin-bottom: 5px; /* Space between label and input */
+    font-size: 0.875rem; /* Tailwind's text-sm */
+    font-weight: 500; /* Tailwind's font-medium */
+}
+
+.modal-form-group { /* Wrapper for label + input */
+    margin-bottom: 1rem; /* Tailwind's mb-4 */
+}
+
+.modal-button {
+    background-color: #607afb;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.modal-button:hover {
+    background-color: #506acb;
+}
+
+.modal-error {
+    color: #f87171; /* Tailwind's red-400 */
+    font-size: 0.875rem; /* text-sm */
+    min-height: 1.25rem; /* Tailwind's h-5, ensures space even if empty */
+    margin-bottom: 0.5rem; /* mb-2 */
+}

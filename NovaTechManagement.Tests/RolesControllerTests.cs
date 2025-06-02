@@ -45,7 +45,7 @@ public class RolesControllerTests
         {
             new Claim(ClaimTypes.Name, "Test Admin User"),
             new Claim(ClaimTypes.NameIdentifier, "100"), // Assuming user ID 100 is an admin for these tests
-            new Claim(ClaimTypes.Role, role),
+            new Claim(ClaimTypes.Role, role), 
         }, "mock"));
 
         var controller = new RolesController(dbContext)
@@ -79,7 +79,7 @@ public class RolesControllerTests
     {
         // Arrange
         var dbContext = GetInMemoryDbContext($"TestDb_AssignRole_{System.Guid.NewGuid()}");
-        var controller = CreateController(dbContext, "Admin");
+        var controller = CreateController(dbContext, "Admin"); 
         int testUserId = 101; // testuser@example.com (ID 101)
         int adminRoleId = 1; // Admin Role ID
 
@@ -101,7 +101,7 @@ public class RolesControllerTests
         var controller = CreateController(dbContext, "Admin");
         int testUserId = 101; // testuser@example.com (ID 101)
         int userRoleId = 2; // User Role ID (seeded as RoleId=2)
-
+        
         // Pre-assign the role
         dbContext.UserRoles.Add(new UserRole { UserId = testUserId, RoleId = userRoleId });
         await dbContext.SaveChangesAsync();

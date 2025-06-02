@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error("Invoice table body not found.");
             return;
         }
-        invoiceTableBody.innerHTML = '';
+        invoiceTableBody.innerHTML = ''; 
 
         if (!invoices || invoices.length === 0) {
             invoiceTableBody.innerHTML = '<tr><td colspan="7" class="text-center text-[#90adcb] py-4">No invoices found.</td></tr>';
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[15%] text-[#90adcb] text-sm font-normal leading-normal">#${invoice.orderId}</td>`;
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[15%] text-[#90adcb] text-sm font-normal leading-normal">${new Date(invoice.invoiceDate).toLocaleDateString()}</td>`;
             row.insertCell().outerHTML = `<td class="h-[72px] px-4 py-2 w-[15%] text-[#90adcb] text-sm font-normal leading-normal">$${parseFloat(invoice.totalAmount).toFixed(2)}</td>`;
-
+            
             const statusCell = row.insertCell();
             statusCell.className = "h-[72px] px-4 py-2 w-[10%] text-sm font-normal leading-normal";
             const statusButton = document.createElement('button');
@@ -68,16 +68,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const params = new URLSearchParams();
         if(searchTerm){
             if(!isNaN(searchTerm) && searchTerm.length > 0) {
-                // Assuming a numeric search term could be Order ID or Client ID.
+                // Assuming a numeric search term could be Order ID or Client ID. 
                 // For simplicity, let's assume it's Order ID if numeric.
                 // A more robust solution might involve a dropdown to select search field.
-                // params.append('orderId', searchTerm);
+                // params.append('orderId', searchTerm); 
                  // For now, let's stick to status search for simplicity with single input
             } else if (searchTerm.length > 0) {
                  params.append('status', searchTerm);
             }
         }
-
+        
         url += (params.toString() ? '?' + params.toString() : '');
 
         try {
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const orderId = parseInt(document.getElementById('addInvoiceOrderId').value, 10);
             const status = document.getElementById('addInvoiceStatus').value;
             const dueDateInput = document.getElementById('addInvoiceDueDate').value;
-            const dueDate = dueDateInput ? dueDateInput : null;
+            const dueDate = dueDateInput ? dueDateInput : null; 
 
             if (isNaN(orderId)) {
                 addInvoiceErrorMessage.textContent = 'Order ID must be a valid number.';
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     throw new Error(errorData.message);
                 }
                 addInvoiceModal.style.display = 'none';
-                fetchInvoices();
+                fetchInvoices(); 
             } catch (error) {
                 addInvoiceErrorMessage.textContent = error.message || 'Failed to add invoice. Please try again.';
             } finally {
@@ -166,5 +166,5 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("One or more modal elements for 'Add Invoice' not found.");
     }
 
-    fetchInvoices();
+    fetchInvoices(); 
 });

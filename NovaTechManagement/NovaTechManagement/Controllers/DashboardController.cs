@@ -62,7 +62,7 @@ namespace NovaTechManagement.Controllers
         public async Task<ActionResult<RevenueTrendDto>> GetRevenueTrend()
         {
             var sixMonthsAgo = DateTime.UtcNow.AddMonths(-6);
-
+            
             var monthlyRevenue = await _context.Invoices
                 .Where(i => i.Status == "Paid" && i.InvoiceDate >= sixMonthsAgo)
                 .GroupBy(i => new { i.InvoiceDate.Year, i.InvoiceDate.Month })
@@ -73,7 +73,7 @@ namespace NovaTechManagement.Controllers
                 })
                 .OrderBy(dp => DateTime.ParseExact(dp.Period, "MMM yyyy", CultureInfo.InvariantCulture))
                 .ToListAsync();
-
+            
             // Ensure all months in the last 6 months are present, even if revenue is zero
             var trendData = new List<RevenueDataPoint>();
             for (int i = 5; i >= 0; i--) // Iterate from 5 months ago to current month

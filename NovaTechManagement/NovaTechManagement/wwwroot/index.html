@@ -27,7 +27,7 @@
           background-color: rgba(0,0,0,0.6);
       }
       .modal-content {
-          background-color: #1c2333;
+          background-color: #1c2333; 
           color: #e0e0e0;
           margin: 10% auto;
           padding: 20px;
@@ -52,7 +52,7 @@
           cursor: pointer;
       }
       .modal-input {
-          width: calc(100% - 22px);
+          width: calc(100% - 22px); 
           padding: 10px;
           margin-top: 5px; /* Space above input */
           margin-bottom: 15px;
@@ -76,7 +76,7 @@
       }
       .modal-message { /* For success/error messages in modal */
           font-size: 0.9em;
-          min-height: 1.2em;
+          min-height: 1.2em; 
           margin-bottom: 10px;
       }
     </style>
@@ -121,7 +121,7 @@
                 />
               </label>
             </div>
-            <p
+            <p 
               id="forgotPasswordLink"
               class="text-[#8e99cc] text-sm font-normal leading-normal pb-3 pt-1 px-4 underline cursor-pointer hover:text-white text-right">
               Forgot password?
@@ -145,7 +145,7 @@
       <div class="modal-content">
         <span id="closeForgotPasswordModal" class="close-button">&times;</span>
         <h2 class="text-xl font-bold mb-4">Forgot Password</h2>
-        <p id="forgotPasswordMessage" class="modal-message mb-2"></p>
+        <p id="forgotPasswordMessage" class="modal-message mb-2"></p> 
         <form id="forgotPasswordForm">
             <label for="forgotPasswordEmail" class="block text-sm font-medium mb-1">Enter your email address:</label>
             <input type="email" id="forgotPasswordEmail" name="email" class="modal-input" required>
@@ -172,10 +172,10 @@
 
         if (loginButton) {
             loginButton.addEventListener('click', async function (event) {
-              event.preventDefault();
+              event.preventDefault(); 
               const email = emailInput.value.trim();
               const password = passwordInput.value.trim();
-              errorMessageParagraph.textContent = '';
+              errorMessageParagraph.textContent = ''; 
               if (!email) { errorMessageParagraph.textContent = 'Please enter your email.'; return; }
               if (!password) { errorMessageParagraph.textContent = 'Please enter your password.'; return; }
 
@@ -197,7 +197,7 @@
                     if(responseData.roles && Array.isArray(responseData.roles)) { // Store roles
                         localStorage.setItem('userRoles', JSON.stringify(responseData.roles));
                     }
-                    window.location.href = 'Dashboard.html';
+                    window.location.href = 'Dashboard.html'; 
                   } else {
                     errorMessageParagraph.textContent = 'Login successful, but no token received.';
                   }
@@ -216,8 +216,8 @@
             forgotPasswordLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 forgotPasswordModal.style.display = 'block';
-                forgotPasswordMessage.textContent = '';
-                forgotPasswordMessage.style.color = 'green';
+                forgotPasswordMessage.textContent = ''; 
+                forgotPasswordMessage.style.color = 'green'; 
                 forgotPasswordForm.reset();
             });
 
@@ -263,7 +263,7 @@
                 }
             });
         }
-
+        
         window.addEventListener('click', (event) => {
             if (event.target === forgotPasswordModal) {
                 forgotPasswordModal.style.display = 'none';

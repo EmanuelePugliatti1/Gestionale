@@ -147,7 +147,7 @@ namespace NovaTechManagement.Controllers
             {
                 product.ImageUrl = updateProductDto.ImageUrl;
             }
-
+            
             try
             {
                 await _context.SaveChangesAsync();

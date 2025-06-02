@@ -152,7 +152,7 @@ namespace NovaTechManagement.Controllers
                 };
                 newOrderItems.Add(orderItem);
                 totalOrderAmount += orderItem.Quantity * orderItem.UnitPrice;
-
+                
                 // Decrease stock
                 product.QuantityInStock -= itemDto.Quantity;
             }
@@ -182,7 +182,7 @@ namespace NovaTechManagement.Controllers
                     return StatusCode(500, new { Message = "An error occurred while creating the order. The transaction has been rolled back." });
                 }
             }
-
+            
             // Reload order with includes for the response DTO
              var createdOrder = await _context.Orders
                 .Include(o => o.Client)
@@ -245,8 +245,8 @@ namespace NovaTechManagement.Controllers
             {
                 order.Status = updateOrderDto.Status;
             }
-
-            // Note: Updating OrderItems is not handled in this PUT.
+            
+            // Note: Updating OrderItems is not handled in this PUT. 
             // That would typically be a more complex operation, possibly involving separate endpoints or a more detailed DTO.
 
             try
@@ -264,7 +264,7 @@ namespace NovaTechManagement.Controllers
                     throw;
                 }
             }
-
+            
             // Reload order with includes for the response DTO
              var updatedOrderEntity = await _context.Orders
                 .Include(o => o.Client)
@@ -317,7 +317,7 @@ namespace NovaTechManagement.Controllers
             {
                  return BadRequest(new { Message = $"Order with status '{order.Status}' cannot be deleted." });
             }
-
+            
             var hasInvoices = await _context.Invoices.AnyAsync(i => i.OrderId == id);
             if (hasInvoices)
             {
@@ -337,7 +337,7 @@ namespace NovaTechManagement.Controllers
             // OrderItems will be deleted by cascade delete if configured (see next step).
             // If not, remove them manually: _context.OrderItems.RemoveRange(order.OrderItems);
             _context.Orders.Remove(order);
-
+            
             await _context.SaveChangesAsync();
 
             return NoContent();

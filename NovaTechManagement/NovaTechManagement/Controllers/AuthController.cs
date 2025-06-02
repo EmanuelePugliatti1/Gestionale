@@ -109,11 +109,11 @@ namespace NovaTechManagement.Controllers
             // 3. Save token with expiry to user record or separate table.
             // 4. Send an email with a reset link (out of scope for this agent).
             Console.WriteLine($"Password reset requested for: {forgotPasswordDto.Email}");
-
+            
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == forgotPasswordDto.Email);
             if (user == null)
             {
-                 // To prevent email enumeration, it's common to return a generic success message
+                 // To prevent email enumeration, it's common to return a generic success message 
                  // regardless of whether the user exists or not.
                  return Ok(new { Message = "If your email address is registered with us, you will receive instructions to reset your password." });
             }

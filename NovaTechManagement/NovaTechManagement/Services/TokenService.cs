@@ -50,7 +50,7 @@ namespace NovaTechManagement.Services
                                      .Where(ur => ur.UserId == user.Id)
                                      .Select(ur => ur.RoleId)
                                      .ToList();
-
+            
             var roleNames = new List<string>();
             if (userRoleIds.Any())
             {
@@ -74,7 +74,7 @@ namespace NovaTechManagement.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddDays(7), 
                 SigningCredentials = creds,
                 Issuer = _issuer,
                 Audience = _audience

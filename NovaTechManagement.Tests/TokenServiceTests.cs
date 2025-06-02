@@ -17,10 +17,10 @@ public class TokenServiceTests
     private ApplicationDbContext GetInMemoryDbContext(string dbName)
     {
         var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-            .UseInMemoryDatabase(databaseName: dbName)
+            .UseInMemoryDatabase(databaseName: dbName) 
             .Options;
         var context = new ApplicationDbContext(options);
-        if (!context.Roles.Any())
+        if (!context.Roles.Any()) 
         {
             context.Roles.AddRange(
                 new Role { Id = 1, Name = "Admin" },
@@ -33,8 +33,8 @@ public class TokenServiceTests
 
     public TokenServiceTests()
     {
-        var inMemorySettings = new Dictionary<string, string?> {
-            {"Jwt:Key", "THIS_IS_A_MUCH_LONGER_AND_MORE_SECURE_TEST_KEY_FOR_HMACSHA512_ALGORITHM_!@#$%^"},
+        var inMemorySettings = new Dictionary<string, string?> { 
+            {"Jwt:Key", "THIS_IS_A_MUCH_LONGER_AND_MORE_SECURE_TEST_KEY_FOR_HMACSHA512_ALGORITHM_!@#$%^"}, 
             {"Jwt:Issuer", "TestIssuer"},
             {"Jwt:Audience", "TestAudience"}
         };
@@ -48,33 +48,33 @@ public class TokenServiceTests
     {
         // Arrange
         var dbName = $"TestDb_TokenRoles_{System.Guid.NewGuid()}";
-        var dbContext = GetInMemoryDbContext(dbName);
-
+        var dbContext = GetInMemoryDbContext(dbName); 
+        
         var adminRole = dbContext.Roles.Single(r => r.Name == "Admin");
         var userRoleForUser = dbContext.Roles.Single(r => r.Name == "User");
 
         // 1. Create and Save User first
-        var user = new User
-        {
-            Id = 1,
-            Email = "test@example.com",
-            FirstName = "Test",
-            LastName = "User",
-            PasswordHash = "test_hash"
+        var user = new User 
+        { 
+            Id = 1, 
+            Email = "test@example.com", 
+            FirstName = "Test", 
+            LastName = "User", 
+            PasswordHash = "test_hash" 
         };
         dbContext.Users.Add(user);
-        dbContext.SaveChanges();
+        dbContext.SaveChanges(); 
 
         // 2. Create and Save UserRole entities explicitly linking them, including navigation properties
         var userRoleAdmin = new UserRole { UserId = user.Id, RoleId = adminRole.Id, Role = adminRole };
         var userRoleUser = new UserRole { UserId = user.Id, RoleId = userRoleForUser.Id, Role = userRoleForUser };
-
+        
         dbContext.UserRoles.AddRange(userRoleAdmin, userRoleUser);
-        dbContext.SaveChanges();
+        dbContext.SaveChanges(); 
 
         // *** Diagnostic Assertion (optional here, but good for debugging) ***
         var savedUserRoles = dbContext.UserRoles.Where(ur => ur.UserId == user.Id).Include(ur => ur.Role).ToList();
-        Assert.Equal(2, savedUserRoles.Count);
+        Assert.Equal(2, savedUserRoles.Count); 
         Assert.NotNull(savedUserRoles.FirstOrDefault(ur => ur.Role?.Name == "Admin")?.Role);
         Assert.NotNull(savedUserRoles.FirstOrDefault(ur => ur.Role?.Name == "User")?.Role);
 
@@ -85,7 +85,7 @@ public class TokenServiceTests
         var tokenService = new TokenService(_configuration, dbContext);
 
         // Act
-        var tokenString = tokenService.CreateToken(user);
+        var tokenString = tokenService.CreateToken(user); 
 
         // Assert
         Assert.NotNull(tokenString);
@@ -99,7 +99,7 @@ public class TokenServiceTests
         // Assert.True(roleClaims.Any(), $"Role claims collection should not be empty. Found {savedUserRoles.Count} UserRole entries in DB for UserId {user.Id} with roles: {string.Join(", ", savedUserRoles.Select(ur => ur.Role?.Name ?? "NULL"))}. Actual claims: {string.Join(", ", roleClaims.Select(rc => rc.Value))}");
         // Assert.Contains(roleClaims, c => c.Value == "Admin");
         // Assert.Contains(roleClaims, c => c.Value == "User");
-        // Assert.Equal(2, roleClaims.Count);
+        // Assert.Equal(2, roleClaims.Count); 
     }
 
     [Fact]
@@ -110,7 +110,7 @@ public class TokenServiceTests
         var dbContext = GetInMemoryDbContext(dbName);
         var user = new User { Id = 2, Email = "noroles@example.com", PasswordHash = "test_hash_2" };
         dbContext.Users.Add(user);
-        dbContext.SaveChanges();
+        dbContext.SaveChanges(); 
 
         var tokenService = new TokenService(_configuration, dbContext);
 

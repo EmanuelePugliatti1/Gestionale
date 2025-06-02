@@ -13,72 +13,7 @@
 
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="js/auth.js"></script>
-    <style>
-        /* Basic Modal Styling - Copied from Clients.html for consistency */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-        }
-        .modal-content {
-            background-color: #1c2333;
-            color: #e0e0e0;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #555;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
-        }
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close-button:hover,
-        .close-button:focus {
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .modal-input, .modal-textarea, .modal-select { /* Added textarea and select */
-            width: calc(100% - 22px); /* Adjusted for padding and border */
-            padding: 10px;
-            margin-bottom: 15px;
-            background-color: #21284a;
-            border: 1px solid #314d68;
-            color: white;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .modal-textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        .modal-button {
-            background-color: #607afb;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .modal-button:hover {
-            background-color: #506acb;
-        }
-        .modal-error {
-            color: red;
-            font-size: 0.9em;
-            min-height: 1.2em;
-        }
-    </style>
+    <link rel="stylesheet" href="css/modals.css"> <!-- Added shared modal CSS -->
   </head>
   <body>
     <script>checkAuthentication();</script>
@@ -177,33 +112,43 @@
     <!-- Add Product Modal -->
     <div id="addProductModal" class="modal">
       <div class="modal-content">
-        <span id="closeProductModalButton" class="close-button">&times;</span>
-        <h2 class="text-xl font-bold mb-4">Add New Product</h2>
-        <p id="addProductErrorMessage" class="modal-error mb-2"></p>
-        <form id="addProductForm">
-            <label for="addProductName" class="block text-sm font-medium mb-1">Product Name:</label>
-            <input type="text" id="addProductName" name="productName" class="modal-input" required>
-
-            <label for="addProductDescription" class="block text-sm font-medium mb-1">Description:</label>
-            <textarea id="addProductDescription" name="description" class="modal-textarea"></textarea>
-
-            <label for="addProductPrice" class="block text-sm font-medium mb-1">Price:</label>
-            <input type="number" id="addProductPrice" name="price" class="modal-input" step="0.01" min="0.01" required>
-
-            <label for="addProductQuantity" class="block text-sm font-medium mb-1">Quantity in Stock:</label>
-            <input type="number" id="addProductQuantity" name="quantityInStock" class="modal-input" min="0" required>
-
-            <label for="addProductStatus" class="block text-sm font-medium mb-1">Status:</label>
-            <select id="addProductStatus" name="status" class="modal-select" required>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-            </select>
-
-            <label for="addProductImageUrl" class="block text-sm font-medium mb-1">Image URL:</label>
-            <input type="url" id="addProductImageUrl" name="imageUrl" class="modal-input">
-
-            <button type="submit" id="saveProductButton" class="modal-button mt-4">Save Product</button>
-        </form>
+        <div class="modal-header">
+            <h2 class="modal-title">Add New Product</h2>
+            <span id="closeProductModalButton" class="close-button">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p id="addProductErrorMessage" class="modal-error mb-2"></p>
+            <form id="addProductForm">
+                <div class="modal-form-group">
+                    <label for="addProductName" class="modal-label">Product Name:</label>
+                    <input type="text" id="addProductName" name="productName" class="modal-input" required>
+                </div>
+                <div class="modal-form-group">
+                    <label for="addProductDescription" class="modal-label">Description:</label>
+                    <textarea id="addProductDescription" name="description" class="modal-textarea"></textarea>
+                </div>
+                <div class="modal-form-group">
+                    <label for="addProductPrice" class="modal-label">Price:</label>
+                    <input type="number" id="addProductPrice" name="price" class="modal-input" step="0.01" min="0.01" required>
+                </div>
+                <div class="modal-form-group">
+                    <label for="addProductQuantity" class="modal-label">Quantity in Stock:</label>
+                    <input type="number" id="addProductQuantity" name="quantityInStock" class="modal-input" min="0" required>
+                </div>
+                <div class="modal-form-group">
+                    <label for="addProductStatus" class="modal-label">Status:</label>
+                    <select id="addProductStatus" name="status" class="modal-select" required>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="modal-form-group">
+                    <label for="addProductImageUrl" class="modal-label">Image URL:</label>
+                    <input type="url" id="addProductImageUrl" name="imageUrl" class="modal-input">
+                </div>
+                <button type="submit" id="saveProductButton" class="modal-button mt-4">Save Product</button>
+            </form>
+        </div>
       </div>
     </div>
     <script src="js/products-page.js"></script>

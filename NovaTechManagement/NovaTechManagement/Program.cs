@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ??
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection") ?? 
                       "Data Source=NovaTechManagement.db"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

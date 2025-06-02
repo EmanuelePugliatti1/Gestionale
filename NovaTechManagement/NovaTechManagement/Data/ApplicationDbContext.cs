@@ -15,7 +15,7 @@ namespace NovaTechManagement.Data
         public DbSet<Order> Orders { get; set; } = default!;
         public DbSet<OrderItem> OrderItems { get; set; } = default!;
         public DbSet<Invoice> Invoices { get; set; } = default!;
-
+        
         // New DbSets for RBAC
         public DbSet<Role> Roles { get; set; } = default!;
         public DbSet<UserRole> UserRoles { get; set; } = default!;
@@ -62,7 +62,7 @@ namespace NovaTechManagement.Data
                 .WithMany(o => o.Invoices)
                 .HasForeignKey(i => i.OrderId)
                 .OnDelete(DeleteBehavior.Restrict);
-
+                
             // Invoice - Client relationship
             modelBuilder.Entity<Invoice>()
                 .HasOne(i => i.Client)
